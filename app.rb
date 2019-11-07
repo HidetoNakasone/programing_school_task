@@ -60,3 +60,13 @@ get '/delete/:item_id' do
 
   redirect '/'
 end
+
+post '/comment' do
+  id = params[:id]
+  name = params[:name]
+  msg = params[:msg]
+
+  client.exec_params('insert into comments(post_id, name, msg) values($1, $2, $3)', [id, name, msg])
+
+  redirect "/item/#{id}"
+end
