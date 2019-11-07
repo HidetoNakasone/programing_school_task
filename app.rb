@@ -3,16 +3,24 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'pg'
 
+enable :sessions
+
 client = PG::connect(
   dbname: 'task_insta'
 )
 
+def login_check()
+  redirect '/login' if session[:user_id].nil?
+end
+
 get '/' do
+  login_check()
   @res = client.exec('select * from posts')
   erb :top
 end
 
 get '/item/:item_id' do
+  login_check()
   id = params[:item_id]
   @res = client.exec_params('select * from posts where id = $1', [id]).first
 
@@ -24,10 +32,12 @@ get '/item/:item_id' do
 end
 
 get '/new' do
+  login_check()
   erb :new
 end
 
 post '/new' do
+  login_check()
   name = params[:name]
   title = params[:title]
   content = params[:content]
@@ -37,6 +47,7 @@ post '/new' do
 end
 
 get '/edit/:item_id' do
+  login_check()
   id = params[:item_id]
   @res = client.exec_params('select * from posts where id = $1', [id]).first
 
@@ -46,6 +57,7 @@ get '/edit/:item_id' do
 end
 
 post '/edit' do
+  login_check()
   id = params[:id]
   name = params[:name]
   title = params[:title]
@@ -56,6 +68,7 @@ post '/edit' do
 end
 
 get '/delete/:item_id' do
+  login_check()
   id = params[:item_id]
   @res = client.exec_params('select * from posts where id = $1', [id]).first
 
@@ -67,6 +80,7 @@ get '/delete/:item_id' do
 end
 
 post '/comment' do
+  login_check()
   id = params[:id]
   name = params[:name]
   msg = params[:msg]
@@ -77,6 +91,7 @@ post '/comment' do
 end
 
 post '/tag' do
+  login_check()
   id = params[:id]
   name = params[:name]
 
@@ -98,6 +113,24 @@ post '/signup' do
   redirect '/signup' if pass != confirmation
 
   client.exec_params('insert into users(name, email, password) values($1, $2, $3)', [name, email, pass])
+
+  redirect '/'
+end
+
+get '/login' do
+  erb :login
+end
+
+post '/login' do
+  name = params[:name]
+  email = params[:email]
+  pass = params[:pass]
+
+  @res = client.exec_params('select * from users where name = $1 and email = $2 and password = $3', [name, email, pass]).first
+
+  redirect '/login' if @res.nil?
+
+  session[:user_id] = @res['id'].to_i
 
   redirect '/'
 end
