@@ -22,3 +22,11 @@ get '/new' do
   erb :new
 end
 
+post '/new' do
+  name = params[:name]
+  title = params[:title]
+  content = params[:content]
+  client.exec_params('insert into posts(name, title, content) values($1, $2, $3)', [name, title, content])
+
+  redirect '/'
+end
