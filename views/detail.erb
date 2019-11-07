@@ -13,3 +13,20 @@
 <br>
 
 <a id="delete_link" href="/delete/<%= @res['id'] %>">投稿を削除する  (´；ω；｀)</a>
+
+<br>
+<br>
+<br>
+
+<div id="comments_area">
+  <div id="comment_form">
+    <form action="/comment" method="POST">
+      <input type="hidden" name="id" value="<%= @res['id'] %>">
+      <label for="input_name">コメント者： </label>
+      <input id="input_name" type="text" name="name"><br>
+      <label for="input_msg">本文</label>
+      <input id="input_msg" type="text" name="msg">
+      <input type="submit" value="送信">
+    </form>
+  </div>
+</div>

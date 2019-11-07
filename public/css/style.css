@@ -46,3 +46,34 @@ a {
 #edit_link, #delete_link {
   color: red;
 }
+
+#comments_area {
+  width: 80%;
+  margin: auto;
+  background-color: rgb(206, 223, 96);
+  padding: 16px;
+  border-radius: 10px;
+}
+
+#comment_form {
+  padding: 10px;
+  margin: 4px 0;
+  border-bottom: 2px solid rgb(125, 125, 125);
+  font-size: 1.3rem;
+}
+
+input[type=text] {
+  background-color: white;
+  padding: 0 10px;
+  border-radius: 10px;
+  font-size: 1rem;
+  border: 1px solid black;
+}
+
+input[type=submit] {
+  background-color: rgba(138, 138, 138, 0.733);
+  padding: 0 5px;
+  border-radius: 10px;
+  color: white;
+  font-size: 1rem;
+}
