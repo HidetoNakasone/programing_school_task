@@ -39,3 +39,13 @@ get '/edit/:item_id' do
 
   erb :edit
 end
+
+post '/edit' do
+  id = params[:id]
+  name = params[:name]
+  title = params[:title]
+  content = params[:content]
+  client.exec_params('update posts set name = $1, title = $2, content = $3 where id = $4', [name, title, content, id])
+
+  redirect "/item/#{id}"
+end
