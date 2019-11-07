@@ -1,0 +1,13 @@
+
+<p>編集画面</p>
+
+<form action="/edit" method="POST">
+  <input type="hidden" name="id" value="<%= @res['id'] %>">
+  <label for="input_name">投稿者の名前： </label>
+  <input id="input_name" type="text" name="name" value="<%= @res['name'] %>"><br>
+  <label for="input_title">投稿のタイトル </label>
+  <input id="input_title" type="text" name="title" value="<%= @res['title'] %>"><br>
+  <label for="input_content">内容 (制限： 250文字) </label>
+  <input id="input_content" type="text" name="content" value="<%= @res['content'] %>">
+  <input type="submit" value="送信">
+</form>

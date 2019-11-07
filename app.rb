@@ -30,3 +30,12 @@ post '/new' do
 
   redirect '/'
 end
+
+get '/edit/:item_id' do
+  id = params[:item_id]
+  @res = client.exec_params('select * from posts where id = $1', [id]).first
+
+  redirect '/' if @res.nil?
+
+  erb :edit
+end

@@ -42,3 +42,7 @@ a {
   padding: 20px;
   font-size: 1.3rem;
 }
+
+#edit_link {
+  color: red;
+}
