@@ -62,7 +62,7 @@ a {
   font-size: 1.3rem;
 }
 
-input[type=text] {
+input[type=text], input[type=password] {
   background-color: white;
   padding: 0 10px;
   border-radius: 10px;

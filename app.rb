@@ -84,3 +84,20 @@ post '/tag' do
 
   redirect "/item/#{id}"
 end
+
+get '/signup' do
+  erb :signup
+end
+
+post '/signup' do
+  name = params[:name]
+  email = params[:email]
+  pass = params[:pass]
+  confirmation = params[:confirmation]
+
+  redirect '/signup' if pass != confirmation
+
+  client.exec_params('insert into users(name, email, password) values($1, $2, $3)', [name, email, pass])
+
+  redirect '/'
+end
