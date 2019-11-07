@@ -1,0 +1,12 @@
+
+<div>
+  <h1>投稿の一覧表示</h1>
+  <div id="contents">
+    <% @res.each do |item| %>
+      <div class="item_wrap">
+        <p><%= item['name'] %>さんによる投稿   『<%= item['title'] %>』</p>
+        <p class="item_contet"><%= item['content'] %></p>
+      </div>
+    <% end %>
+  </div>
+</div>
