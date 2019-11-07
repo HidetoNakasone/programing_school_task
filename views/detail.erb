@@ -23,7 +23,7 @@
     <form action="/tag" method="POST">
       <input type="hidden" name="id" value="<%= @res['id'] %>">
       <label for="input_name">タグ名： </label>
-      <input id="input_name" type="text" name="name">
+      <input id="input_name" type="text" name="name" required>
       <input type="submit" value="登録">
     </form>
   </div>
@@ -45,9 +45,9 @@
     <form action="/comment" method="POST">
       <input type="hidden" name="id" value="<%= @res['id'] %>">
       <label for="input_name">コメント者： </label>
-      <input id="input_name" type="text" name="name"><br>
+      <input id="input_name" type="text" name="name" required><br>
       <label for="input_msg">本文</label>
-      <input id="input_msg" type="text" name="msg">
+      <input id="input_msg" type="text" name="msg" required>
       <input type="submit" value="送信">
     </form>
   </div>
