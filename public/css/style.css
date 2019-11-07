@@ -43,6 +43,6 @@ a {
   font-size: 1.3rem;
 }
 
-#edit_link {
+#edit_link, #delete_link {
   color: red;
 }

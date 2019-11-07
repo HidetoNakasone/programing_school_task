@@ -49,3 +49,14 @@ post '/edit' do
 
   redirect "/item/#{id}"
 end
+
+get '/delete/:item_id' do
+  id = params[:item_id]
+  @res = client.exec_params('select * from posts where id = $1', [id]).first
+
+  redirect '/' if @res.nil?
+
+  client.exec('delete from posts where id = $1;', [id])
+
+  redirect '/'
+end
