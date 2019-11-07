@@ -18,6 +18,8 @@ get '/item/:item_id' do
 
   @comments = client.exec_params('select * from comments where post_id = $1', [id])
 
+  @tags = client.exec_params('select * from tags where post_id = $1', [id])
+
   erb :detail
 end
 
@@ -70,6 +72,15 @@ post '/comment' do
   msg = params[:msg]
 
   client.exec_params('insert into comments(post_id, name, msg) values($1, $2, $3)', [id, name, msg])
+
+  redirect "/item/#{id}"
+end
+
+post '/tag' do
+  id = params[:id]
+  name = params[:name]
+
+  client.exec_params('insert into tags(post_id, name) values($1, $2)', [id, name])
 
   redirect "/item/#{id}"
 end

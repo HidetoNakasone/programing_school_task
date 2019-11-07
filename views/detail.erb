@@ -18,6 +18,28 @@
 <br>
 <br>
 
+<div id="tags_area">
+  <div id="tag_form">
+    <form action="/tag" method="POST">
+      <input type="hidden" name="id" value="<%= @res['id'] %>">
+      <label for="input_name">タグ名： </label>
+      <input id="input_name" type="text" name="name">
+      <input type="submit" value="登録">
+    </form>
+  </div>
+  <div id="tags_show">
+    <% unless @tags.first.nil? %>
+      <% @tags.each do |tag| %>
+        <div class="tag_wrap">
+          <span class="tag_value"><%= tag['name'] %></span>
+        </div>
+      <% end %>
+    <% else %>
+      <p>タグ無し</p>
+    <% end %>
+  </div>
+</div>
+
 <div id="comments_area">
   <div id="comment_form">
     <form action="/comment" method="POST">
