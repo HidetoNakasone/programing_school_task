@@ -15,6 +15,9 @@ end
 get '/item/:item_id' do
   id = params[:item_id]
   @res = client.exec_params('select * from posts where id = $1', [id]).first
+
+  @comments = client.exec_params('select * from comments where post_id = $1', [id])
+
   erb :detail
 end
 

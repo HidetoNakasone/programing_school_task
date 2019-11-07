@@ -77,3 +77,8 @@ input[type=submit] {
   color: white;
   font-size: 1rem;
 }
+
+.comment_msg {
+  padding-left: 20px;
+  color: red;
+}

@@ -29,4 +29,15 @@
       <input type="submit" value="送信">
     </form>
   </div>
+  <div id="comments_show">
+    <% unless @comments.first.nil? %>
+      <% @comments.each do |comment| %>
+        <div class="comment_wrap">
+          <p><%= comment['name'] %> さんによる投稿   ：<span class="comment_msg"><%= comment['msg'] %></span></p>
+        </div>
+      <% end %>
+    <% else %>
+      <p>この投稿へのコメントはまだありません。</p>
+    <% end %>
+  </div>
 </div>
