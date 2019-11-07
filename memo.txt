@@ -1,0 +1,137 @@
+
+Created_at: 2019/11/07
+
+# 与えられた課題を試しに作ってみるぞ
+
+## お題
+  // DropboxPaperより
+
+  12. Instagram風のアプリを作る 課題形式
+    - 全員分の投稿一覧画面
+    - 投稿個別画面
+    - 新規投稿
+    - 編集画面
+    - 削除機能
+
+    - Git
+    - 画像投稿
+    - comment機能
+    - タグ(optional)
+    - ログイン
+    - バリデーション
+
+
+## 流れ
+  まずはデータベースを作成
+    CREATE DATABASE task_insta;
+
+    CREATE TABLE posts (
+      id SERIAL NOT NULL PRIMARY KEY,
+      name VARCHAR(25) NOT NULL,
+      title VARCHAR(50) NOT NULL,
+      content VARCHAR(250) NOT NULL
+    );
+
+  GET '/' で一覧表示させる
+    作ったけど、表示されているのか、レコードが0だと分かりづらい。
+    ので、サンプルで追加する
+
+      INSERT INTO posts(name, title, content) VALUES('hep', 'first', '(/・ω・)/');
+
+      INSERT INTO posts(name, title, content) VALUES('hep', 'secound', '(。-｀ω´-)ぅぃ');
+
+    commitした
+
+  投稿をクリックしたら詳細ページへ飛ばす
+    GET '/item/:item_id'
+    commitした
+
+  新規投稿機能を作ろう： 投稿ページの作成
+    GET '/new'
+    commitした
+
+  新規投稿機能を作ろう： 保存する機能
+    POST '/new'
+    commitした
+
+  投稿の詳細ページにて、編集機能をつける： 編集ページの作成
+    GET '/edit/:item_id'
+    commitした
+
+  投稿の詳細ページにて、編集機能をつける： 変更を保存する機能部分
+    POST '/edit/'
+    commitした
+
+  編集と似た感じで、削除機能を作る
+    GET '/delete/:item_id'
+    commitした
+
+  // 以降は追加機能
+
+  コメント機能
+    まずはテーブル作成
+    CREATE TABLE comments (
+      id SERIAL NOT NULL PRIMARY KEY,
+      post_id int NOT NULL,
+      name VARCHAR(50) NOT NULL,
+      msg VARCHAR(250) NOT NULL
+    );
+
+  詳細画面にてコメント投稿機能追加： ビュー側
+    commitした
+
+  詳細画面にてコメント投稿機能追加： 保存処理
+    POST '/comment'
+    commitした
+
+  詳細画面にてコメント投稿機能追加： 表示させる
+    GET '/item/:item_id' に追記
+    commitした
+
+  タグ付け用のテーブル作成
+    CREATE TABLE tags (
+      id SERIAL NOT NULL PRIMARY KEY,
+      post_id int NOT NULL,
+      name VARCHAR(50) NOT NULL
+    );
+
+  詳細画面にてタグを追加・表示させる
+    POST '/tag'
+    commitした
+
+  ログインの前にusersテーブルを作成
+    CREATE TABLE users (
+      id SERIAL NOT NULL PRIMARY KEY,
+      name VARCHAR(25) NOT NULL,
+      email VARCHAR(35) NOT NULL,
+      password VARCHAR(60) NOT NULL,
+      UNIQUE (email)
+    );
+
+  サインアップの機能を作る
+    GET '/signup'
+    POST '/signup'
+
+  ログイン機能を作って、必ずログインさせる
+    GET '/login'
+
+  バリデーション
+    まぁ実はexec_paramsを使う様にしていたので、sqlインジェクションの心配はそこまでする必要はない。
+
+    だが、入力してね！って処理で、何も入力されないとバグが生じるケースが十分考えられる。
+
+    そこを解決する
+
+    あと、email入力のtypeをemailに修正する
+
+    ※それと・・・まぁ実はこれでも駄目。実はinputのrequired属性って、スペース一つでも可能。・・・本来、バリデーションはJSでリアルタイムでこの入力が正しいか判断させた方が良い。
+
+  // 以降、追加した方が良さそうな機能
+    投稿時の名前の入力を省いて、ログインした時に覚えたuser_idで紐付ける
+      // 今の状態はusersとpostsが紐付いていない。
+      // 一度、postテーブルを作り直した方が良い。
+        ※あと、本来はpostsテーブルの外部キーを設定すべし(制約)
+    投稿者しか編集・削除・タグの追加ができない様にする
+      // そもそも削除をgetで行っているのが怖い。
+    一覧表示画面フィルター機能を追加。タグ検索
+      // sql句の勉強
