@@ -17,3 +17,8 @@ get '/item/:item_id' do
   @res = client.exec_params('select * from posts where id = $1', [id]).first
   erb :detail
 end
+
+get '/new' do
+  erb :new
+end
+
